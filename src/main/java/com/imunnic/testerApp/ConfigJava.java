@@ -3,7 +3,6 @@ package com.imunnic.testerApp;
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Properties;
-
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

@@ -1,39 +1,36 @@
 package com.imunnic.entidades;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "RESULTADOS")
-public class Resultado {
+@Entity(name = "RESULTADOS")
+public class Resultado implements Identificable<Long>{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private int resultado;
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "PARTICIPANTE")
+  @ManyToOne
+  @JoinColumn(name = "participanteId")
   private Participante participante;
-  
+  @ManyToOne
+  @JoinColumn(name = "juezId")
+  private Juez juez;
+  @ManyToOne
+  @JoinColumn(name = "pruebaId")
+  private Prueba prueba;
+  private int marca;
+
+  @Override
   public Long getId() {
+    // TODO Auto-generated method stub
     return id;
   }
   
   public void setId(Long id) {
     this.id = id;
-  }
-  
-  public int getResultado() {
-    return resultado;
-  }
-  
-  public void setResultado(int resultado) {
-    this.resultado = resultado;
   }
   
   public Participante getParticipante() {
@@ -43,13 +40,41 @@ public class Resultado {
   public void setParticipante(Participante participante) {
     this.participante = participante;
   }
-
-  public Resultado() {
+  
+  public Juez getJuez() {
+    return juez;
   }
   
-  public Resultado(int resultado, Participante participante) {
-    setResultado(resultado);
-    setParticipante(participante);
+  public void setJuez(Juez juez) {
+    this.juez = juez;
   }
+  
+  public Prueba getPrueba() {
+    return prueba;
+  }
+  
+  public void setPrueba(Prueba prueba) {
+    this.prueba = prueba;
+  }
+  
+  public int getMarca() {
+    return marca;
+  }
+  
+  public void setMarca(int marca) {
+    this.marca = marca;
+  }
+  
+  public Resultado() {
+  }
+
+  public Resultado(Participante participante, Juez juez, Prueba prueba, int marca) {
+    setParticipante(participante);
+    setJuez(juez);
+    setPrueba(prueba);
+    setMarca(marca);
+  }
+  
+  
 
 }

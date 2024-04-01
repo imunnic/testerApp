@@ -1,43 +1,19 @@
 package com.imunnic.entidades;
 
-import java.util.ArrayList;
-import java.util.List;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.DiscriminatorColumn;
-import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 
-@Entity
-@Table(name="PERSONAS")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name ="TIPO")
-@DiscriminatorValue("PERSONA")
-public class Persona {
+@Entity(name = "PERSONAS")
+public class Persona implements Identificable<Long> {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+  private String dni;
   private String nombre;
   private String apellido1;
   private String apellido2;
-  @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Participante> participantes;
-
-  
-  public Long getId() {
-    return id;
-  }
-  
-  public void setId(Long id) {
-    this.id = id;
-  }
   
   public String getNombre() {
     return nombre;
@@ -63,23 +39,31 @@ public class Persona {
     this.apellido2 = apellido2;
   }
   
-  public List<Participante> getParticipantes() {
-    return participantes;
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  @Override
+  public Long getId() {
+    return this.id;
+  }
+  
+  public String getDni() {
+    return dni;
+  }
+  
+  public void setDni(String dni) {
+    this.dni = dni;
   }
   
   public Persona() {
-    participantes = new ArrayList<>();
   }
   
-  public Persona(String nombre, String apellido1, String apellido2) {
-    this();
+  public Persona(String nombre, String apellido1, String apellido2, String dni) {
     setNombre(nombre);
     setApellido1(apellido1);
     setApellido2(apellido2);
-  }
-  
-  public void addParticipante(Participante participante) {
-    participantes.add(participante);
+    setDni(dni);
   }
 
 }
